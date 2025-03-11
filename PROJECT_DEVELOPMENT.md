@@ -117,3 +117,15 @@ Postconditions: Image and Information is retrieved, stored, or removed successfu
 ***
 
 ### Gantt Chart
+
+***
+
+### Structure Chart
+
+***
+
+### Algorithms
+
+***
+
+### Data Dictionary
