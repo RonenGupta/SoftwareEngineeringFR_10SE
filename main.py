@@ -53,8 +53,12 @@ def GUI():
 
     # ViewFrame Button to view the daily APOD
     View_Button = tk.Button(FindFrame, text="View the Daily APOD!", command=View_APOD_Button, fg="black", bg="black")
-    View_Button.pack(pady=20)
+    View_Button.pack(pady=30)
 
+    # Label to explain the date input
+    date_label = Label(ViewFrame, text="Enter a date in YYYY-MM-DD format:", bg="black", fg="white")
+    date_label.pack(pady=10)
+    
     # Entry widget for date input
     View_Input = Entry(ViewFrame, bg="black", fg="white", insertbackground="white", font=("Arial", 12))
     View_Input.pack(pady=10)  # Add padding for spacing
@@ -89,8 +93,8 @@ def View_APOD_Button():
         response.raise_for_status()
         image_data = response.content
         image = Image.open(io.BytesIO(image_data))
-        # Resize image to fit within a reasonable size (e.g., 600x400 max)
-        image = image.resize((min(image.width, 600), min(image.height, 400)), Image.LANCZOS)
+        # Resize image to fit within a reasonable size)
+        image = image.resize((min(image.width, 2000), min(image.height, 1000)), Image.LANCZOS)
         photo = ImageTk.PhotoImage(image)
         # Update the image_label with the new image
         image_label_find.config(image=photo)
@@ -113,8 +117,8 @@ def View_APOD_Input():
                 response.raise_for_status()
                 image_data = response.content
                 image = Image.open(io.BytesIO(image_data))
-                # Resize image to fit within a reasonable size (e.g., 600x400 max)
-                image = image.resize((min(image.width, 600), min(image.height, 400)), Image.LANCZOS)
+                # Resize image to fit within a reasonable size)
+                image = image.resize((min(image.width, 2000), min(image.height, 1000)), Image.LANCZOS)
                 photo = ImageTk.PhotoImage(image)
                 image_label_view.config(image=photo)
                 image_label_view.photo = photo
