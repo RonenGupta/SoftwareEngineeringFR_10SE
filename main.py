@@ -11,7 +11,7 @@ apod = mm.get_apod()
 
 # Main GUI function
 def GUI():
-    global View_Input, image_label_find, find_image_frame, photo_ref, image_label_view
+    global View_Input, image_label_find, find_image_frame, photo_ref, image_label_view, explanation_text_frame
     
     root = tk.Tk()
     root.title("NASA NERD GUIDE")
@@ -54,6 +54,10 @@ def GUI():
     # ViewFrame Button to view the daily APOD
     View_Button = tk.Button(FindFrame, text="View the Daily APOD!", command=View_APOD_Button, fg="black", bg="black")
     View_Button.pack(pady=30)
+
+    # Explanation label for the chosen APOD image
+    explanation_text_frame = Label(FindFrame, bg="black")
+    explanation_text_frame.pack(pady=10)
 
     # Label to explain the date input
     date_label = Label(ViewFrame, text="Enter a date in YYYY-MM-DD format:", bg="black", fg="white")
@@ -103,6 +107,10 @@ def View_APOD_Button():
     except Exception as e:
         print(f"Error loading image: {e}")
         image_label_find.config(image="", text=f"Error loading image: {e}", fg="red")
+
+# Function to view title, explanation, date url of the chosen APOD in FindFrame
+def Find_APOD_Explanation():
+    global explanation_text_frame
 
 # Function to view APOD for the specified date
 def View_APOD_Input():
