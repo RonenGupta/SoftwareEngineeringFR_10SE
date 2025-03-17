@@ -1,60 +1,130 @@
 import my_module as mm
-import webbrowser
+import tkinter as tk
+from tkinter import *
+from tkinter import ttk
+import requests
+import io
+from PIL import Image, ImageTk
 
-def display_menu():
-    """Display the main menu."""
-    print("\n=== NASA APOD Explorer ===")
-    print("1. View Today's APOD")
-    print("2. Add Today's APOD to Favorites")
-    print("3. View Favorites")
-    print("0. Exit")
+# Fetch today's APOD initially
+apod = mm.get_apod()
 
-def main():
-    while True:
-        display_menu()
-        choice = input("\nEnter your choice (0-3): ")
+# Main GUI function
+def GUI():
+    global View_Input, image_label_find, find_image_frame, photo_ref, image_label_view
+    
+    root = tk.Tk()
+    root.title("NASA NERD GUIDE")
+    root.geometry("900x600")
+    root.config(bg="black")
 
+    style = ttk.Style()
+    
+    # Configure the Notebook style
+    style.theme_use("default")  #
+    style.configure("TNotebook", background="black", borderwidth=0)  
+    style.configure("TNotebook.Tab", background="black", foreground="white", padding=[10, 5], borderwidth=0) 
+    style.map("TNotebook.Tab", background=[("selected", "#1a1a1a"), ("active", "#333333")], foreground=[("selected", "white"), ("active", "white")])  # Tab states
+    style.configure("TFrame", background="black") 
+    
+    # Create a Notebook (tabbed interface)
+    NASANOTEBOOK = ttk.Notebook(root)
+    NASANOTEBOOK.pack(fill='both', expand=True)
+
+    # Create frames for each tab
+    FindFrame = ttk.Frame(NASANOTEBOOK)
+    ViewFrame = ttk.Frame(NASANOTEBOOK)
+    SaveFrame = ttk.Frame(NASANOTEBOOK)
+    RemoveFrame = ttk.Frame(NASANOTEBOOK)
+
+    # Add tabs to the Notebook
+    NASANOTEBOOK.add(FindFrame, text='Find an APOD!')
+    NASANOTEBOOK.add(ViewFrame, text='View an APOD!')
+    NASANOTEBOOK.add(SaveFrame, text='Save an APOD!')
+    NASANOTEBOOK.add(RemoveFrame, text='Remove an APOD!')
+
+    # Add frame to the FindFrame tab for the APOD image
+    find_image_frame = Frame(FindFrame, bg="black")
+    find_image_frame.pack(fill='both', expand=True, padx=10, pady=10)
+
+    # Add an image label inside the frame for the APOD image
+    image_label_find = Label(find_image_frame, bg="black")
+    image_label_find.pack(pady=10)
+
+    # ViewFrame Button to view the daily APOD
+    View_Button = tk.Button(FindFrame, text="View the Daily APOD!", command=View_APOD_Button, fg="black", bg="black")
+    View_Button.pack(pady=20)
+
+    # Entry widget for date input
+    View_Input = Entry(ViewFrame, bg="black", fg="white", insertbackground="white", font=("Arial", 12))
+    View_Input.pack(pady=10)  # Add padding for spacing
+
+    # Button to open the View Frame image
+    View_Button = tk.Button(ViewFrame, text="Open Image!", command=View_APOD_Input)
+    View_Button.pack(pady=10)
+
+    # Add frame to the ViewFrame tab for the APOD image
+    view_image_frame = Frame(ViewFrame, bg="black")
+    view_image_frame.pack(fill='both', expand=True, padx=10, pady=10)
+
+    #Add an image label inside the frame for the APOD image
+    image_label_view = Label(view_image_frame, bg="black")
+    image_label_view.pack(pady=10)
+
+    # Initialize photo_ref to None
+    photo_ref = None
+
+    root.mainloop()
+
+# Function to view the daily APOD
+def View_APOD_Button():
+    global image_label_find, image_url, photo_ref
+    if apod is None:
+        print("Failed to detch today's APOD.")
+        image_label_find.config(image="", text="Failed to fetch APOD", fg="red")
+        return
+    try:
+        image_url = apod['image_url']
+        response = requests.get(image_url, timeout=10)
+        response.raise_for_status()
+        image_data = response.content
+        image = Image.open(io.BytesIO(image_data))
+        # Resize image to fit within a reasonable size (e.g., 600x400 max)
+        image = image.resize((min(image.width, 600), min(image.height, 400)), Image.LANCZOS)
+        photo = ImageTk.PhotoImage(image)
+        # Update the image_label with the new image
+        image_label_find.config(image=photo)
+        image_label_find.photo = photo
+        photo_ref = photo
+    except Exception as e:
+        print(f"Error loading image: {e}")
+        image_label_find.config(image="", text=f"Error loading image: {e}", fg="red")
+
+# Function to view APOD for the specified date
+def View_APOD_Input():
+    global View_Input, photo_ref, image_label_view
+    date = View_Input.get()
+    if date:
         try:
-            choice = int(choice)
-            if choice == 0:
-                print("Goodbye!")
-                break
-
-            elif choice == 1:
-                apod = mm.get_apod()
-                if apod:
-                    print(f"\nTitle: {apod['title']}")
-                    print(f"Date: {apod['date']}")
-                    print(f"Explanation: {apod['explanation']}")
-                    print(f"Image URL: {apod['image_url']}")
-                    try:
-                        webbrowser.open(apod['image_url'])
-                    except Exception as e:
-                        print(f"Could not open browser: {e}")
-                # No else clause needed; get_apod() handles error messaging
-
-            elif choice == 2:
-                apod = mm.get_apod()
-                if apod:
-                    name = input("Enter a name for this favorite: ")
-                    mm.add_favorite(name, apod)
-                    print(f"Added '{name}' to favorites!")
-
-            elif choice == 3:
-                if mm.favorites:
-                    print("\nFavorites:")
-                    for name, data in mm.favorites.items():
-                        print(f"- {name}: {data['title']}")
-                        print(f"  Date: {data['date']}")
-                        print(f"  URL: {data['image_url']}")
-                else:
-                    print("No favorites yet!")
-
+            apod_data = mm.get_apod(date)  # Fetch APOD for the specified date
+            if apod_data and 'image_url' in apod_data:
+                image_url = apod_data['image_url']
+                response = requests.get(image_url, timeout=10)
+                response.raise_for_status()
+                image_data = response.content
+                image = Image.open(io.BytesIO(image_data))
+                # Resize image to fit within a reasonable size (e.g., 600x400 max)
+                image = image.resize((min(image.width, 600), min(image.height, 400)), Image.LANCZOS)
+                photo = ImageTk.PhotoImage(image)
+                image_label_view.config(image=photo)
+                image_label_view.photo = photo
+                photo_ref = photo
             else:
-                print("Invalid choice. Please select 0-3.")
+                print("No image found for this date or failed to fetch APOD.")
+        except Exception as e:
+            print(f"Error fetching APOD for date {date}: {e}")
+    else:
+        print("Please enter a date in YYYY-MM-DD format.")
 
-        except ValueError:
-            print("Please enter a valid number.")
-
-if __name__ == "__main__":
-    main()
+# Run the GUI
+GUI()

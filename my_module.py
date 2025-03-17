@@ -2,14 +2,26 @@ import requests
 
 # NASA API Base URL
 APOD_URL = "https://api.nasa.gov/planetary/apod"
-API_KEY = "c1R5mNKBtlpRqXwI29rUPfRJvcTPbE8drebdwrEI"  # Replace with your own API key from https://api.nasa.gov/
+API_KEY = "c1R5mNKBtlpRqXwI29rUPfRJvcTPbE8drebdwrEI"  # My API key
 
 # Dictionary to store favorite celestial objects
 favorites = {}
 
-def get_apod():
-    """Fetch NASA's Astronomy Picture of the Day (APOD)."""
+def get_apod(date=None):
+    """Fetch NASA's Astronomy Picture of the Day (APOD).
+    
+    Args:
+        date (str, optional): Date in 'YYYY-MM-DD' format to fetch APOD for a specific day.
+                              If None, fetches the current day's APOD.
+    
+    Returns:
+        dict: Dictionary containing APOD details (title, date, explanation, image_url).
+        None: If the request fails.
+    """
     params = {"api_key": API_KEY}
+    if date:
+        params["date"] = date  # Date Parameter
+
     try:
         response = requests.get(APOD_URL, params=params, timeout=10)  # Add timeout
         response.raise_for_status()  # Raise exception for bad status codes
