@@ -11,7 +11,8 @@ apod = mm.get_apod()
 
 # Main GUI function
 def GUI():
-    global View_Input, image_label_find, find_image_frame, photo_ref, image_label_view, explanation_text_frame
+    global View_Input, image_label_find, find_image_frame, photo_ref, image_label_view, explanation_text_find, explanation_text_view
+    global NASANOTEBOOK
     
     root = tk.Tk()
     root.title("NASA NERD GUIDE")
@@ -55,9 +56,9 @@ def GUI():
     View_Button = tk.Button(FindFrame, text="View the Daily APOD!", command=View_APOD_Button, fg="black", bg="black")
     View_Button.pack(pady=30)
 
-    # Explanation label for the chosen APOD image
-    explanation_text_frame = Label(FindFrame, bg="black")
-    explanation_text_frame.pack(pady=10)
+    # Explanation, title, url text for the chosen APOD image
+    explanation_text_find = Text(FindFrame, height=10, width=80, bg="black", fg="white", wrap="word", font=("Arial", 10))
+    explanation_text_find.pack(pady=10)
 
     # Label to explain the date input
     date_label = Label(ViewFrame, text="Enter a date in YYYY-MM-DD format:", bg="black", fg="white")
@@ -75,9 +76,13 @@ def GUI():
     view_image_frame = Frame(ViewFrame, bg="black")
     view_image_frame.pack(fill='both', expand=True, padx=10, pady=10)
 
-    #Add an image label inside the frame for the APOD image
+    # Add an image label inside the frame for the APOD image
     image_label_view = Label(view_image_frame, bg="black")
     image_label_view.pack(pady=10)
+
+    # Add an explanation, title, url text for the chosen APOD image
+    explanation_text_view = Text(ViewFrame, height=10, width=80, bg="black", fg="white", wrap="word", font=("Arial", 10))
+    explanation_text_view.pack(pady=10)
 
     # Initialize photo_ref to None
     photo_ref = None
@@ -98,23 +103,26 @@ def View_APOD_Button():
         image_data = response.content
         image = Image.open(io.BytesIO(image_data))
         # Resize image to fit within a reasonable size)
-        image = image.resize((min(image.width, 2000), min(image.height, 1000)), Image.LANCZOS)
+        image = image.resize((min(image.width, 600), min(image.height, 400)), Image.LANCZOS)
         photo = ImageTk.PhotoImage(image)
         # Update the image_label with the new image
         image_label_find.config(image=photo)
         image_label_find.photo = photo
         photo_ref = photo
+
+        # Update the explanation_text with the APOD details
+        explanation_text_find.delete(1.0, END)
+        explanation_text_find.insert(END, f"Title: {apod['title']}\n")
+        explanation_text_find.insert(END, f"Date: {apod['date']}\n")
+        explanation_text_find.insert(END, f"Explanation: {apod['explanation']}\n")
+        explanation_text_find.insert(END, f"Image URL: {apod['image_url']}\n")
     except Exception as e:
         print(f"Error loading image: {e}")
         image_label_find.config(image="", text=f"Error loading image: {e}", fg="red")
 
-# Function to view title, explanation, date url of the chosen APOD in FindFrame
-def Find_APOD_Explanation():
-    global explanation_text_frame
-
 # Function to view APOD for the specified date
 def View_APOD_Input():
-    global View_Input, photo_ref, image_label_view
+    global View_Input, photo_ref, image_label_view, explanation_text_view
     date = View_Input.get()
     if date:
         try:
@@ -126,11 +134,17 @@ def View_APOD_Input():
                 image_data = response.content
                 image = Image.open(io.BytesIO(image_data))
                 # Resize image to fit within a reasonable size)
-                image = image.resize((min(image.width, 2000), min(image.height, 1000)), Image.LANCZOS)
+                image = image.resize((min(image.width, 600), min(image.height, 400)), Image.LANCZOS)
                 photo = ImageTk.PhotoImage(image)
                 image_label_view.config(image=photo)
                 image_label_view.photo = photo
                 photo_ref = photo
+                # Update the explanation_text with the APOD details
+                explanation_text_view.delete(1.0, END)
+                explanation_text_view.insert(END, f"Title: {apod_data['title']}\n")
+                explanation_text_view.insert(END, f"Date: {apod_data['date']}\n")
+                explanation_text_view.insert(END, f"Explanation: {apod_data['explanation']}\n")
+                explanation_text_view.insert(END, f"Image URL: {apod_data['image_url']}\n")
             else:
                 print("No image found for this date or failed to fetch APOD.")
         except Exception as e:
