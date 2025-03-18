@@ -58,7 +58,7 @@ def GUI():
     View_Button.pack(pady=30)
 
     # Explanation, title, url text for the chosen APOD image
-    explanation_text_find = Text(FindFrame, height=10, width=80, bg="black", fg="white", wrap="word", font=("Arial", 10))
+    explanation_text_find = Text(FindFrame, height=15, width=80, bg="black", fg="white", wrap="word", font=("Arial", 10))
     explanation_text_find.pack(pady=10)
 
     # -- ViewFrame Code --
@@ -83,7 +83,7 @@ def GUI():
     image_label_view.pack(pady=10)
 
     # Add an explanation, title, url text for the chosen APOD image
-    explanation_text_view = Text(ViewFrame, height=10, width=80, bg="black", fg="white", wrap="word", font=("Arial", 10))
+    explanation_text_view = Text(ViewFrame, height=15, width=80, bg="black", fg="white", wrap="word", font=("Arial", 10))
     explanation_text_view.pack(pady=10)
 
     # Initialize photo_ref to None
