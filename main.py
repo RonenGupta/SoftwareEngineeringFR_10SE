@@ -44,6 +44,7 @@ def GUI():
     NASANOTEBOOK.add(SaveFrame, text='Save an APOD!')
     NASANOTEBOOK.add(RemoveFrame, text='Remove an APOD!')
 
+    # -- FindFrame Code --
     # Add frame to the FindFrame tab for the APOD image
     find_image_frame = Frame(FindFrame, bg="black")
     find_image_frame.pack(fill='both', expand=True, padx=10, pady=10)
@@ -60,6 +61,7 @@ def GUI():
     explanation_text_find = Text(FindFrame, height=10, width=80, bg="black", fg="white", wrap="word", font=("Arial", 10))
     explanation_text_find.pack(pady=10)
 
+    # -- ViewFrame Code --
     # Label to explain the date input
     date_label = Label(ViewFrame, text="Enter a date in YYYY-MM-DD format:", bg="black", fg="white")
     date_label.pack(pady=10)
@@ -102,8 +104,8 @@ def View_APOD_Button():
         response.raise_for_status()
         image_data = response.content
         image = Image.open(io.BytesIO(image_data))
-        # Resize image to fit within a reasonable size)
-        image = image.resize((min(image.width, 600), min(image.height, 400)), Image.LANCZOS)
+        # Resize image to fit within a reasonable size
+        image = image.resize((min(image.width, 600), min(image.height, 400)), Image.LANCZOS) # Image.LANZOS for high-quality resampling, given by the PIL library.
         photo = ImageTk.PhotoImage(image)
         # Update the image_label with the new image
         image_label_find.config(image=photo)
@@ -134,7 +136,7 @@ def View_APOD_Input():
                 image_data = response.content
                 image = Image.open(io.BytesIO(image_data))
                 # Resize image to fit within a reasonable size)
-                image = image.resize((min(image.width, 600), min(image.height, 400)), Image.LANCZOS)
+                image = image.resize((min(image.width, 600), min(image.height, 400)), Image.LANCZOS) # Image.LANZOS for high-quality resampling, given by the PIL library.
                 photo = ImageTk.PhotoImage(image)
                 image_label_view.config(image=photo)
                 image_label_view.photo = photo
