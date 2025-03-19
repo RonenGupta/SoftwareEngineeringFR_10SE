@@ -7,7 +7,7 @@ API_KEY = "c1R5mNKBtlpRqXwI29rUPfRJvcTPbE8drebdwrEI"  # My API key
 # Dictionary to store favorite celestial objects
 favorites = {}
 
-def get_apod(date=None):
+def get_apod(date=None): # Function to fetch the Astronomy Picture of the Day (APOD) from NASA
     """Fetch NASA's Astronomy Picture of the Day (APOD).
     
     Args:
@@ -22,7 +22,7 @@ def get_apod(date=None):
     if date:
         params["date"] = date  # Date Parameter
 
-    try:
+    try: # Error handling
         response = requests.get(APOD_URL, params=params, timeout=10)  # Add timeout
         response.raise_for_status()  # Raise exception for bad status codes
         data = response.json()
@@ -45,6 +45,6 @@ def get_apod(date=None):
         print("Invalid response from NASA API (not JSON).")
         return None
 
-def add_favorite(name, details):
+def add_favorite(name, details): # Function to save an APOD in the favorites collection
     """Store a celestial object in the favorites collection."""
     favorites[name] = details
