@@ -52,7 +52,7 @@ def GUI():
     image_label_find.pack(pady=10)
 
     # ViewFrame Button to view the daily APOD
-    View_Button = tk.Button(FindFrame, text="View the Daily APOD!", command=View_APOD_Button, fg="black", bg="black")
+    View_Button = tk.Button(FindFrame, text="View the Daily APOD!", command=View_APOD_Button, fg="white", bg="black")
     View_Button.pack(pady=30)
 
     # Explanation, title, url text for the chosen APOD image
@@ -68,7 +68,7 @@ def GUI():
     APOD_name_find.pack(pady=10)
 
     # Button to save the Daily APOD
-    Save_Button = tk.Button(FindFrame, text="Save the Daily APOD!", command=Save_APOD_Button, fg="black", bg="black")
+    Save_Button = tk.Button(FindFrame, text="Save the Daily APOD!", command=Save_APOD_Button, fg="white", bg="black")
     Save_Button.pack(pady=10)
 
     # -- ViewFrame Code --
@@ -105,7 +105,7 @@ def GUI():
     APOD_name_view.pack(pady=10) 
 
     # Button to save the APOD
-    Save_Button = tk.Button(ViewFrame, text="Save the APOD!", command=Save_APOD, fg="black", bg="black")
+    Save_Button = tk.Button(ViewFrame, text="Save the APOD!", command=Save_APOD, fg="white", bg="black")
     Save_Button.pack(pady=10)
 
     # -- SaveFrame Code --
@@ -126,11 +126,11 @@ def GUI():
     Saved_APODs.pack(pady=10)
 
     # Add a button to view the selected APOD from the saved list
-    View_Button = tk.Button(SaveFrame, text="View Selected APOD!", command=View_Saved_APOD, fg="black", bg="black")
+    View_Button = tk.Button(SaveFrame, text="View Selected APOD!", command=View_Saved_APOD, fg="white", bg="black")
     View_Button.pack(pady=10) 
 
     # Add a button to remove the selected APOD from the saved list
-    Remove_Button = tk.Button(SaveFrame, text="Remove Selected APOD!", command=Remove_Saved_APOD, fg="black", bg="black")
+    Remove_Button = tk.Button(SaveFrame, text="Remove Selected APOD!", command=Remove_Saved_APOD, fg="white", bg="black")
     Remove_Button.pack(pady=10)
 
     # Initialize photo_ref to None
