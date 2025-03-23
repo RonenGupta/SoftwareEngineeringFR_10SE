@@ -5,13 +5,16 @@ from tkinter import ttk
 import requests
 import io
 from PIL import Image, ImageTk
+from tkcalendar import DateEntry
+import ttkbootstrap as tb
+
 
 # Fetch today's APOD
 apod = mm.get_apod()
 
 # Main GUI
 def GUI():
-    global View_Input, image_label_find, find_image_frame, photo_ref, image_label_view, explanation_text_find, explanation_text_view, APOD_name_find, explanation_text_save, Saved_APODs, image_label_save, save_image_frame, photo_ref, APOD_name_view, find_label, date_label
+    global Date1, image_label_find, find_image_frame, photo_ref, image_label_view, explanation_text_find, explanation_text_view, APOD_name_find, explanation_text_save, Saved_APODs, image_label_save, save_image_frame, photo_ref, APOD_name_view, find_label, date_label
     global NASANOTEBOOK
     
     root = tk.Tk()
@@ -72,13 +75,14 @@ def GUI():
     Save_Button.pack(pady=10)
 
     # -- ViewFrame Code --
-    # Label to explain the date input
-    date_label = Label(ViewFrame, text="Enter a date in YYYY-MM-DD format:", bg="black", fg="white")
-    date_label.pack(pady=10)
     
-    # Entry widget for date input
-    View_Input = Entry(ViewFrame, bg="black", fg="white", insertbackground="white", font=("Arial", 12))
-    View_Input.pack(pady=10)  # Add padding for spacing
+    # Label to explain the date input
+    date_label = Label(ViewFrame, text="Select a date from the calendar and press the Open Image button to view, or manually input with YYYY-MM-DD format!", bg="black", fg="white")
+    date_label.pack(pady=10)
+
+    # Create a Date Entry widget
+    Date1 = tb.DateEntry(ViewFrame, dateformat='%Y-%m-%d', bootstyle="dark")
+    Date1.pack(pady=10)
 
     # Button to open the View Frame image
     View_Button = tk.Button(ViewFrame, text="Open Image!", command=View_APOD_Input)
@@ -182,11 +186,12 @@ def Save_APOD_Button():
 
 # Function to view APOD for the specified date
 def View_APOD_Input():
-    global View_Input, photo_ref, image_label_view, explanation_text_view
-    date = View_Input.get()  
+    global photo_ref, image_label_view, explanation_text_view, Date1
+    date = Date1.entry.get()
     if date: 
         try:
-            apod_data = mm.get_apod(date)  
+            apod_data = mm.get_apod(date)
+            
             if apod_data and 'image_url' in apod_data: 
                 image_url = apod_data['image_url']
                 response = requests.get(image_url, timeout=10)
