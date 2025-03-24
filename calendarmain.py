@@ -7,6 +7,7 @@ import io
 from PIL import Image, ImageTk
 from tkcalendar import DateEntry
 import ttkbootstrap as tb
+from tkinter import PhotoImage
 
 
 # Fetch today's APOD
@@ -36,14 +37,29 @@ def GUI():
     NASANOTEBOOK.pack(fill='both', expand=True)
 
     # Create frames for each tab
+    IntroFrame = ttk.Frame(NASANOTEBOOK)
     FindFrame = ttk.Frame(NASANOTEBOOK)
     ViewFrame = ttk.Frame(NASANOTEBOOK)
     SaveFrame = ttk.Frame(NASANOTEBOOK)
 
     # Add tabs to the Notebook
+    NASANOTEBOOK.add(IntroFrame, text = 'Introduction')
     NASANOTEBOOK.add(FindFrame, text='Find an APOD!')
     NASANOTEBOOK.add(ViewFrame, text='View and Save an APOD!')
     NASANOTEBOOK.add(SaveFrame, text='View and Remove Saved APODS!')
+
+    # -- IntroFrame Code --
+
+    image = PhotoImage(file="APOD image.png")
+    canvas = Canvas(IntroFrame, width=300, height=200)
+    canvas.pack(pady=20, padx=10)
+    canvas.create_image( 0, 0, image = image,
+                                 anchor = "nw")
+   
+
+    intro_label_find = Label(IntroFrame, text="Welcome to the NASA Astronomy Picture of the Day system!\n You'll be able to: \n 1. Find the Daily APOD! \n 2. View an APOD of your choice! \n 3. Save that APOD for later viewing! \n Have fun in your astronomical fantasies! \n Made by Ronen Gupta", font = ("Arial", 10))
+    intro_label_find.pack(pady=10)
+
 
     # -- FindFrame Code --
     # Add frame to the FindFrame tab for the APOD image
