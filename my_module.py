@@ -3,6 +3,7 @@ import requests
 # NASA API Base URL
 APOD_URL = "https://api.nasa.gov/planetary/apod"
 API_KEY = "c1R5mNKBtlpRqXwI29rUPfRJvcTPbE8drebdwrEI"  # My API key
+thumbs = True
 
 # Dictionary to store favorite celestial objects
 favorites = {}
@@ -22,6 +23,7 @@ def get_apod(date=None): # Function to fetch the Astronomy Picture of the Day (A
     if date:
         params["date"] = date  # Date Parameter
 
+
     try: # Error handling
         response = requests.get(APOD_URL, params=params, timeout=10)  # Add timeout
         response.raise_for_status()  # Raise exception for bad status codes
@@ -32,6 +34,9 @@ def get_apod(date=None): # Function to fetch the Astronomy Picture of the Day (A
             "explanation": data["explanation"],
             "image_url": data["url"]
         }
+    
+    except KeyError as e:
+        print(f"Could not find today's APOD URL. (It is possibly video formatted and does not have a thumbnail). ({e})")
     except requests.exceptions.ConnectionError as e:
         print(f"Network error: Could not connect to NASA API. Check your internet connection. ({e})")
         return None

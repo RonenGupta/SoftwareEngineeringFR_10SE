@@ -8,6 +8,7 @@ from PIL import Image, ImageTk
 from tkcalendar import DateEntry
 import ttkbootstrap as tb
 from tkinter import PhotoImage
+import webbrowser
 
 
 # Fetch today's APOD
@@ -56,10 +57,8 @@ def GUI():
     canvas.create_image( 0, 0, image = image,
                                  anchor = "nw")
    
-
     intro_label_find = Label(IntroFrame, text="Welcome to the NASA Astronomy Picture of the Day system!\n You'll be able to: \n 1. Find the Daily APOD! \n 2. View an APOD of your choice! \n 3. Save that APOD for later viewing! \n Have fun in your astronomical fantasies! \n Made by Ronen Gupta", font = ("Arial", 10))
     intro_label_find.pack(pady=10)
-
 
     # -- FindFrame Code --
     # Add frame to the FindFrame tab for the APOD image
@@ -70,9 +69,13 @@ def GUI():
     image_label_find = Label(find_image_frame, bg="black")
     image_label_find.pack(pady=10)
 
-    # ViewFrame Button to view the daily APOD
+    # FindFrame Button to view the daily APOD
     View_Button = tk.Button(FindFrame, text="View the Daily APOD!", command=View_APOD_Button, fg="white", bg="black")
     View_Button.pack(pady=30)
+
+    # FindFrame Button to view the daily APOD as a url
+    View_URL_Button = tk.Button(FindFrame, text="View the Daily APOD as a URL!", command=View_APOD_URL_Button, fg="white", bg="black")
+    View_URL_Button.pack(pady=30)
 
     # Explanation, title, url text for the chosen APOD image
     explanation_text_find = Text(FindFrame, height=15, width=80, bg="black", fg="white", wrap="word", font=("Arial", 10))
@@ -162,7 +165,7 @@ def GUI():
 def View_APOD_Button():
     global image_label_find, image_url, photo_ref
     if apod is None: 
-        print("Failed to detch today's APOD.")
+        print("Failed to fetch today's APOD.")
         image_label_find.config(image="", text="Failed to fetch APOD", fg="red")
         return
     try:
@@ -184,6 +187,18 @@ def View_APOD_Button():
     except Exception as e: 
         print(f"Error loading image: {e}")
         image_label_find.config(image="", text=f"Error loading image: {e}", fg="red")
+
+def View_APOD_URL_Button():
+    
+    if apod:
+        print(f"\nTitle: {apod['title']}")
+        print(f"Date: {apod['date']}")
+        print(f"Explanation: {apod['explanation']}")
+        print(f"Image URL: {apod['image_url']}")
+    try:
+        webbrowser.open('https://apod.nasa.gov/apod/astropix.html')
+    except Exception as e:
+        print(f"Could not open browser: {e}")
 
 def Save_APOD_Button():
     global photo_ref, Saved_APODs, APOD_name_find, explanation_text_find
