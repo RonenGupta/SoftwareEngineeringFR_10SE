@@ -244,6 +244,8 @@ def View_APOD_Input():
                 print("No image found for this date or failed to fetch APOD.") 
         except Exception as e: 
             print(f"Error fetching APOD for date {date}: {e}")
+            print(f"Transitioning to a URL viewing format...  (The APOD is a video with no thumbnail or an interactive one wowowowow)")
+            webbrowser.open(image_url)
     else:
         print("Please enter a date in YYYY-MM-DD format.")
     

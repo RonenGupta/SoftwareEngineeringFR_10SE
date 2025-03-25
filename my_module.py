@@ -36,7 +36,7 @@ def get_apod(date=None): # Function to fetch the Astronomy Picture of the Day (A
         }
     
     except KeyError as e:
-        print(f"Could not find today's APOD URL. (It is possibly video formatted and does not have a thumbnail). ({e})")
+        print(f"Could not find today's APOD URL. (It is possibly video formatted and does not have a thumbnail, use the view APOD in a URL button instead!). ({e})")
     except requests.exceptions.ConnectionError as e:
         print(f"Network error: Could not connect to NASA API. Check your internet connection. ({e})")
         return None
