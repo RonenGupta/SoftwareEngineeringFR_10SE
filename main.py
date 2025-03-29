@@ -5,13 +5,18 @@ from tkinter import ttk
 import requests
 import io
 from PIL import Image, ImageTk
+from tkcalendar import DateEntry
+import ttkbootstrap as tb
+from tkinter import PhotoImage
+import webbrowser
+
 
 # Fetch today's APOD
 apod = mm.get_apod()
 
 # Main GUI
 def GUI():
-    global View_Input, image_label_find, find_image_frame, photo_ref, image_label_view, explanation_text_find, explanation_text_view, APOD_name_find, explanation_text_save, Saved_APODs, image_label_save, save_image_frame, photo_ref, APOD_name_view, find_label, date_label
+    global Date1, image_label_find, find_image_frame, photo_ref, image_label_view, explanation_text_find, explanation_text_view, APOD_name_find, explanation_text_save, Saved_APODs, image_label_save, save_image_frame, photo_ref, APOD_name_view, find_label, date_label
     global NASANOTEBOOK
     
     root = tk.Tk()
@@ -33,14 +38,27 @@ def GUI():
     NASANOTEBOOK.pack(fill='both', expand=True)
 
     # Create frames for each tab
+    IntroFrame = ttk.Frame(NASANOTEBOOK)
     FindFrame = ttk.Frame(NASANOTEBOOK)
     ViewFrame = ttk.Frame(NASANOTEBOOK)
     SaveFrame = ttk.Frame(NASANOTEBOOK)
 
     # Add tabs to the Notebook
+    NASANOTEBOOK.add(IntroFrame, text = 'Introduction')
     NASANOTEBOOK.add(FindFrame, text='Find an APOD!')
     NASANOTEBOOK.add(ViewFrame, text='View and Save an APOD!')
     NASANOTEBOOK.add(SaveFrame, text='View and Remove Saved APODS!')
+
+    # -- IntroFrame Code --
+
+    image = PhotoImage(file="APOD image.png")
+    canvas = Canvas(IntroFrame, width=300, height=200)
+    canvas.pack(pady=20, padx=10)
+    canvas.create_image( 0, 0, image = image,
+                                 anchor = "nw")
+   
+    intro_label_find = Label(IntroFrame, text="Welcome to the NASA Astronomy Picture of the Day system!\n You'll be able to: \n 1. Find the Daily APOD! \n 2. View an APOD of your choice! \n 3. Save that APOD for later viewing! \n Have fun in your astronomical fantasies! \n Made by Ronen Gupta", font = ("Arial", 10))
+    intro_label_find.pack(pady=10)
 
     # -- FindFrame Code --
     # Add frame to the FindFrame tab for the APOD image
@@ -51,9 +69,13 @@ def GUI():
     image_label_find = Label(find_image_frame, bg="black")
     image_label_find.pack(pady=10)
 
-    # ViewFrame Button to view the daily APOD
+    # FindFrame Button to view the daily APOD
     View_Button = tk.Button(FindFrame, text="View the Daily APOD!", command=View_APOD_Button, fg="white", bg="black")
     View_Button.pack(pady=30)
+
+    # FindFrame Button to view the daily APOD as a url
+    View_URL_Button = tk.Button(FindFrame, text="View the Daily APOD as a URL!", command=View_APOD_URL_Button, fg="white", bg="black")
+    View_URL_Button.pack(pady=30)
 
     # Explanation, title, url text for the chosen APOD image
     explanation_text_find = Text(FindFrame, height=15, width=80, bg="black", fg="white", wrap="word", font=("Arial", 10))
@@ -72,13 +94,14 @@ def GUI():
     Save_Button.pack(pady=10)
 
     # -- ViewFrame Code --
-    # Label to explain the date input
-    date_label = Label(ViewFrame, text="Enter a date in YYYY-MM-DD format:", bg="black", fg="white")
-    date_label.pack(pady=10)
     
-    # Entry widget for date input
-    View_Input = Entry(ViewFrame, bg="black", fg="white", insertbackground="white", font=("Arial", 12))
-    View_Input.pack(pady=10)  # Add padding for spacing
+    # Label to explain the date input
+    date_label = Label(ViewFrame, text="Select a date from the calendar and press the Open Image button to view, or manually input with YYYY-MM-DD format!", bg="black", fg="white")
+    date_label.pack(pady=10)
+
+    # Create a Date Entry widget
+    Date1 = tb.DateEntry(ViewFrame, dateformat='%Y-%m-%d', bootstyle="dark")
+    Date1.pack(pady=10)
 
     # Button to open the View Frame image
     View_Button = tk.Button(ViewFrame, text="Open Image!", command=View_APOD_Input)
@@ -142,7 +165,7 @@ def GUI():
 def View_APOD_Button():
     global image_label_find, image_url, photo_ref
     if apod is None: 
-        print("Failed to detch today's APOD.")
+        print("Failed to fetch today's APOD.")
         image_label_find.config(image="", text="Failed to fetch APOD", fg="red")
         return
     try:
@@ -165,6 +188,18 @@ def View_APOD_Button():
         print(f"Error loading image: {e}")
         image_label_find.config(image="", text=f"Error loading image: {e}", fg="red")
 
+def View_APOD_URL_Button():
+    
+    if apod:
+        print(f"\nTitle: {apod['title']}")
+        print(f"Date: {apod['date']}")
+        print(f"Explanation: {apod['explanation']}")
+        print(f"Image URL: {apod['image_url']}")
+    try:
+        webbrowser.open('https://apod.nasa.gov/apod/astropix.html')
+    except Exception as e:
+        print(f"Could not open browser: {e}")
+
 def Save_APOD_Button():
     global photo_ref, Saved_APODs, APOD_name_find, explanation_text_find
     find_name = APOD_name_find.get()
@@ -182,11 +217,12 @@ def Save_APOD_Button():
 
 # Function to view APOD for the specified date
 def View_APOD_Input():
-    global View_Input, photo_ref, image_label_view, explanation_text_view
-    date = View_Input.get()  
+    global photo_ref, image_label_view, explanation_text_view, Date1
+    date = Date1.entry.get()
     if date: 
         try:
-            apod_data = mm.get_apod(date)  
+            apod_data = mm.get_apod(date)
+            
             if apod_data and 'image_url' in apod_data: 
                 image_url = apod_data['image_url']
                 response = requests.get(image_url, timeout=10)
@@ -208,6 +244,8 @@ def View_APOD_Input():
                 print("No image found for this date or failed to fetch APOD.") 
         except Exception as e: 
             print(f"Error fetching APOD for date {date}: {e}")
+            print(f"Transitioning to a URL viewing format...  (The APOD is a video with no thumbnail or an interactive one wowowowow)")
+            webbrowser.open(image_url)
     else:
         print("Please enter a date in YYYY-MM-DD format.")
     
@@ -216,6 +254,10 @@ def Save_APOD():
     global photo_ref, APOD_name_view
     try:
         name = APOD_name_view.get()
+        saved_names = Saved_APODs.get(0, END)
+        if name in saved_names:
+            print(f"APOD with name '{name}' already exists in favorites. Please choose a different name.")
+            return
         if not name:
             print("Please enter a name for the APOD.")
             return
