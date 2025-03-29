@@ -8,8 +8,6 @@
 
 ### Functional Requirements
 
-***
-
 **Data Retrieval: What does the user need to be able to view in the system?**
 
 - A: User must be able to view images from any future chosen NASA API, as well as the information, date, and URL of that NASA image, as well as any external information that the user may want to know.
@@ -121,6 +119,9 @@ Postconditions: Image and Information is retrieved, stored, or removed successfu
 ***
 
 ### Structure Chart
+- Link for the Structure Chart: https://lucid.app/lucidchart/4fa442b4-c20c-47bb-b0a6-0d82bf8ebd6c/edit?invitationId=inv_56e13952-b4da-4ceb-847f-882dd6c4d600
+
+- Image: ![NASA APOD Structure Chart](./NASA_APOD_StructureChart.png)
 
 ***
 
@@ -129,7 +130,11 @@ Postconditions: Image and Information is retrieved, stored, or removed successfu
 ***
 
 ### Data Dictionary
-
+- Link for the Data Dictionary: https://docs.google.com/document/d/1pd_3o4khOgFJZ_VoCDkAaHMMozaAgS-jTSy6FWuxrEM/edit?usp=sharing
+![Data Dictionary 1](./DataDictionary1.png)
+![Data Dictionary 2](./DataDictionary2.png)
+![Data Dictionary 3](./DataDictionary3.png)
+![Data Dictionary 4](./DataDictionary4.png)
 ***
 
 ## Development
