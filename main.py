@@ -19,20 +19,11 @@ def GUI():
     global Date1, image_label_find, find_image_frame, photo_ref, image_label_view, explanation_text_find, explanation_text_view, APOD_name_find, explanation_text_save, Saved_APODs, image_label_save, save_image_frame, photo_ref, APOD_name_view, find_label, date_label
     global NASANOTEBOOK
     
-    root = tk.Tk()
-    root.title("NASA NERD GUIDE")
+    # Configure the style of the Notebook
+    root = tb.Window(themename = "cyborg")
+    root.title("NASA APOD VIEWER")
     root.geometry("900x600")
-    root.config(bg="black")
 
-    style = ttk.Style()
-    
-    # Notebook style
-    style.theme_use("default")  #
-    style.configure("TNotebook", background="black", borderwidth=0)  
-    style.configure("TNotebook.Tab", background="black", foreground="white", padding=[10, 5], borderwidth=0) 
-    style.map("TNotebook.Tab", background=[("selected", "#1a1a1a"), ("active", "#333333")], foreground=[("selected", "white"), ("active", "white")])  # Tab states
-    style.configure("TFrame", background="black") 
-    
     # Create a Notebook 
     NASANOTEBOOK = ttk.Notebook(root)
     NASANOTEBOOK.pack(fill='both', expand=True)
@@ -44,13 +35,13 @@ def GUI():
     SaveFrame = ttk.Frame(NASANOTEBOOK)
 
     # Add tabs to the Notebook
-    NASANOTEBOOK.add(IntroFrame, text = 'Introduction')
-    NASANOTEBOOK.add(FindFrame, text='Find an APOD!')
-    NASANOTEBOOK.add(ViewFrame, text='View and Save an APOD!')
-    NASANOTEBOOK.add(SaveFrame, text='View and Remove Saved APODS!')
+    NASANOTEBOOK.add(IntroFrame, text = '🌌 Introduction 🌌')
+    NASANOTEBOOK.add(FindFrame, text='⭐ Find an APOD! ⭐')
+    NASANOTEBOOK.add(ViewFrame, text='💫 View and Save an APOD! 💫')
+    NASANOTEBOOK.add(SaveFrame, text='🪐 View and Remove Saved APODS! 🪐')
 
     # -- IntroFrame Code --
-
+    # Add an APOD into image to the IntroFrame
     image = PhotoImage(file="APOD image.png")
     canvas = Canvas(IntroFrame, width=300, height=200)
     canvas.pack(pady=20, padx=10)
@@ -166,7 +157,6 @@ def View_APOD_Button():
     global image_label_find, image_url, photo_ref
     if apod is None: 
         print("Failed to fetch today's APOD.")
-        image_label_find.config(image="", text="Failed to fetch APOD", fg="red")
         return
     try:
         image_url = apod['image_url']
