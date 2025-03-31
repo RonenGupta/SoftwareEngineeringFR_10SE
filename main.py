@@ -176,7 +176,6 @@ def View_APOD_Button():
         explanation_text_find.insert(END, f"Image URL: {apod['image_url']}\n")
     except Exception as e: 
         print(f"Error loading image: {e}")
-        image_label_find.config(image="", text=f"Error loading image: {e}", fg="red")
 
 def View_APOD_URL_Button():
     
