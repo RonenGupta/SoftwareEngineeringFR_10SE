@@ -163,7 +163,7 @@ def View_APOD_Button():
         response = requests.get(image_url, timeout=10) # Making a timeout procedure for the request of the url (I made this a non-functional requirement where it must be under 10 seconds.)
         response.raise_for_status() # Raise an exception if the request was unsucessful
         image_data = response.content # From the response I get the content of the image
-        image = Image.open(io.BytesIO(image_data)) # I open the image using the Pillow library
+        image = Image.open(io.BytesIO(image_data)) # I open the image using the Pillow library, turning it into bytes
         image = image.resize((min(image.width, 500), min(image.height, 300)), Image.LANCZOS) # I use Image.LANCZOS to resize the image
         photo = ImageTk.PhotoImage(image) # I convert the image to a PhotoImage object, allowing me to insert it into the Tkinter label
         image_label_find.config(image=photo) # I then configure the Tkinter label to display the image
@@ -177,7 +177,7 @@ def View_APOD_Button():
         explanation_text_find.insert(END, f"Image URL: {apod['image_url']}\n")
         # Error handling
     except Exception as e: 
-        print(f"Error loading image: {e}")
+        print(f"Error loading image: {e} (Maybe try opening as a URL?)")
 
 def View_APOD_URL_Button():
     # A basic function to view the APOD as a URL and print the explanation in the console instead

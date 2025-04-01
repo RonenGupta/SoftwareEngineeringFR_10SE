@@ -138,7 +138,7 @@ Postconditions: Image and Information is retrieved, stored, or removed successfu
 ![Data Dictionary 4](./DataDictionary4.png)
 ***
 
-## Development
+## Integration
 
 ### 1. First Commit - Basic Text Based GUI
 
