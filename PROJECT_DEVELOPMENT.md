@@ -1282,3 +1282,18 @@ def View_Saved_APOD():
 GUI()
 ```
 - Explanation: As of now, I've made the calendar function with the tkcalendar module and imported the DateEntry function to create calendars for entering the desired date, a very enticed part of my project and also good for maximised user interface. For dates such as 2025/03/02, (this was an interactive APOD) if you choose this date in the ViewAPOD frame, it will automatically take you to the URL for that APOD, and I've also added a button in the DailyAPOD frame if the person wishes to go to the website and view the APOD instead of on the GUI. However an issue with this is that the user cannot actively save these types of APOD's, and if the user tries to save the date 2025/03/02, when you try to view it in the SavedAPOD's frame, the APOD will instead by outputted as the daily APOD and there will be no explanation (There was no explanation for this date I think). The goal would be saving these interactive APOD's but not outputting them as an image in the GUI when clicked on in the selected index but rather taking you to the website (I scrapped this idea.)
+
+## Additional Notes (Tutorials I used, etc.)
+1. Link: https://realpython.com/image-processing-with-the-python-pillow-library/ - I went through Pillow basics, manipulating images into bytes with ioBytesIO, as well as resizing and using filters such as LANCZOS, BILINEAR, NEAREST, and then pairing this with the original requests module for maximum capabilities.
+
+2. Link: https://ttkbootstrap.readthedocs.io/en/latest/ - I went through ttkbootstrap, a separate module where I integrated widget styles as well to make it look cleaner as new widgets such as DateEntry in my code.
+
+3. Link: https://coderslegacy.com/python/tkcalendar-date-picker-calendar/ - I also went through the basic tkcalendar module, however I mitigated this idea due to the cleanliness of ttkbootstrap as a whole.
+
+4. Link: https://www.pythontutorial.net/tkinter/tkinter-listbox/ - A simple tutorial for tkinter listboxes.
+
+5. Link: https://www.geeksforgeeks.org/image-viewer-app-in-python-using-tkinter/ - This incredibly useful tutorial served as a basis for my code, introducing me to PhotoImage data types as well as utilising pillow and tkinter together.
+
+ - Other tutorials, such as from youtube were also linked in my previous development frameworks.
+
+ 6. Link: https://realpython.com/python-dicts/ - This was utilised for my module, specifically for the favourites dictionary as it possessed more leeway into dictionaries as a whole, I also addressed the date parameter in the module which was not related to this however.
