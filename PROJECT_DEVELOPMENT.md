@@ -127,6 +127,127 @@ Postconditions: Image and Information is retrieved, stored, or removed successfu
 
 ### Algorithms
 
+- Main Routine Pseudocode:
+ ``` python
+BEGIN main()
+    WHILE user_input is NOT "EXIT"
+        INPUT user_input
+        IF API REQUEST Valid THEN
+            DISPLAY GUI and "IntroFrame"
+
+            # --FindFrame Segment--
+            IF user_input is "FindFrame" THEN
+                DISPLAY FindFrame
+                IF user_input is View_APOD_Button THEN
+                    DISPLAY View_APOD_Button
+                ELSEIF user_input is View_APOD_URL_Button THEN
+                    DISPLAY View_APOD_URL_Button
+                    IF user_input is Save_APOD_Button THEN
+                        Save_APOD_Button
+                    ELSE
+                        CONTINUE
+                    ENDIF
+                ENDIF
+            ENDIF
+
+            # --ViewFrame Segment--
+            ELSEIF user_input is "ViewFrame" THEN
+                DISPLAY ViewFrame
+                IF user_input is View_APOD_Input THEN
+                    DISPLAY View_APOD_Input
+                    IF user_input is Save_APOD THEN
+                        Save_APOD
+                    ELSE
+                        CONTINUE
+                    ENDIF
+                ENDIF
+            ENDIF
+
+            # --SaveFrame Segment--
+            ELSEIF user_input is "SaveFrame" THEN
+                DISPLAY SaveFrame
+                IF user_input is View_Saved_APOD THEN
+                    IF APOD CLICKED THEN
+                        DISPLAY View_Saved_APOD
+                    ELSE
+                        PRINT "Please select an APOD to view."
+                        CONTINUE
+                    ENDIF
+                ELSEIF user_input is Remove_Saved_APOD THEN
+                    IF APOD CLICKED THEN
+                        DISPLAY Remove_Saved_APOD
+                    ELSE
+                        PRINT "Please select an APOD to remove."
+                        CONTINUE
+                    ENDIF
+                ENDIF
+            ENDIF
+        ELSE
+            PRINT "API Request Failed"
+            EXIT
+        ENDIF
+    ENDWHILE
+END main()
+ ```
+ ***
+
+- Link for the Main Routine Flowchart (Too big to fit in this .md): https://lucid.app/lucidchart/b50196f5-49ed-465e-8f45-b1e15e7e4d8e/edit?viewport_loc=-2078%2C-1181%2C9251%2C5290%2C0_0&invitationId=inv_610aec57-f4fc-4c3b-993a-5f64bac6f6fe
+***
+- First Subroutine Pseudocode - Save_APOD
+
+``` python
+BEGIN Save_APOD
+    TRY
+        INPUT name FROM APOD_name_view
+        IF name is EMPTY THEN
+            PRINT "Please enter a name for the APOD"
+            RETURN
+        ENDIF
+    EXCEPT Exception as e
+        PRINT "Error saving APOD: ", e
+        RETURN
+    ENDTRY
+
+    IF photo_ref EXISTS THEN
+        STORE photo_ref and explanation_text_view in mm.favorites USING name AS KEY
+        ADD name to Saved_APODs LISTBOX
+    ELSE
+        PRINT "No APOD image to save."
+    ENDIF
+END Save_APOD
+```
+***
+- Link for the First Subroutine Flowchart: https://lucid.app/lucidchart/516ca3db-76b3-485d-ab0b-17b3647f4b77/edit?viewport_loc=-219%2C-190%2C3384%2C1935%2C0_0&invitationId=inv_76db8ead-9001-411f-ac58-8684e18652de
+***
+- Image for First Subroutine Flowchart: ![First-Subroutine-Flowchart](./First-Subroutine-Flowchart.png)
+***
+- Second Subroutine Pseudocode - Remove_Saved_APOD
+
+``` python
+BEGIN Remove_Saved_APOD
+    TRY
+        GET selected_index from Saved_APODs LISTBOX
+        IF selected_index is EMPTY THEN
+            PRINT "Please select an APOD to remove."
+            RETURN
+        ENDIF
+
+        GET selected_name from Saved_APODs USING selected_index
+        REMOVE selected_name FROM mm.favorites DICTIONARY
+        DELETE selected_name FROM Saved_APODs LISTBOX
+        PRINT f"Removed APOD ", selected_name, " from favorites!"
+
+        CLEAR explanation_text_save
+        CLEAR image_label_save
+    EXCEPT Exception as e
+        PRINT "Error removing APOD: ", e
+    ENDTRY
+END Remove_Saved_APOD
+```
+***
+- Link for Second Subroutine Flowchart: https://lucid.app/lucidchart/5b3eae51-5eb8-4f83-b1bc-f728d09e4a2d/edit?viewport_loc=-849%2C1548%2C4379%2C2504%2C0_0&invitationId=inv_ce7106f4-f38a-410a-9e19-cf23e82b9b30
+***
+- Image for the Second Subroutine Flowchart: ![Second-Subroutine-Flowchart](./Second-Subroutine-Flowchart.png)
 
 ***
 
