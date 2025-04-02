@@ -10,7 +10,7 @@
 
 **Data Retrieval: What does the user need to be able to view in the system?**
 
-- A: User must be able to view images from any future chosen NASA API, as well as the information, date, and URL of that NASA image, as well as any external information that the user may want to know.
+- A: User must be able to view images from any future chosen NASA API, as well as the information, date, and URL of that NASA image, as well as any external information that the user may want to know, and furthermore save this.
 
 **User Interface: What is required for the user to interact with the system?**
 
@@ -115,7 +115,9 @@ Postconditions: Image and Information is retrieved, stored, or removed successfu
 ***
 
 ### Gantt Chart
+- Link for the Gantt Chart: https://docs.google.com/spreadsheets/d/17w6MqNqxJE3_En6HbhOfRSIty1XGfrXXg17LGQqG-lg/edit?usp=sharing
 
+- Image: ![Software Engineering Preliminary Gantt Chart](./Software%20Engineering%20Preliminary%20Gantt%20Chart.png)
 ***
 
 ### Structure Chart
@@ -259,7 +261,7 @@ END Remove_Saved_APOD
 ![Data Dictionary 4](./DataDictionary4.png)
 ***
 
-## Integration
+## Integration/Testing and Debugging
 
 ### 1. First Commit - Basic Text Based GUI
 
@@ -1403,6 +1405,90 @@ def View_Saved_APOD():
 GUI()
 ```
 - Explanation: As of now, I've made the calendar function with the tkcalendar module and imported the DateEntry function to create calendars for entering the desired date, a very enticed part of my project and also good for maximised user interface. For dates such as 2025/03/02, (this was an interactive APOD) if you choose this date in the ViewAPOD frame, it will automatically take you to the URL for that APOD, and I've also added a button in the DailyAPOD frame if the person wishes to go to the website and view the APOD instead of on the GUI. However an issue with this is that the user cannot actively save these types of APOD's, and if the user tries to save the date 2025/03/02, when you try to view it in the SavedAPOD's frame, the APOD will instead by outputted as the daily APOD and there will be no explanation (There was no explanation for this date I think). The goal would be saving these interactive APOD's but not outputting them as an image in the GUI when clicked on in the selected index but rather taking you to the website (I scrapped this idea.)
+
+***
+## Installation
+***
+### README.md
+
+``` python
+# NASA APOD Viewing System
+
+## Intro - Welcome to the NASA APOD Viewing App! 
+
+## Features - In here, you can view your favorite APOD's and save them for later viewing! There are 4 different tabs for this:
+
+1. Intro Tab
+2. Daily APOD Tab
+3. View an APOD by date
+4. Save an APOD
+
+We hope you have fun in your astronomical fantasies!
+
+## Requirements
+
+For the following program, you will require these modules:
+- 'requests' for getting APOD data
+- 'pillow' for image handling
+- 'ttkbootstrap' for cool GUI graphics
+- 'tkcalendar' for a cool DateEntry feature in the GUI
+
+## Install Dependencies
+Clone the repository and navigate to the project directory:
+
+Then run the command:
+
+``` bash
+pip install -r requirements.txt
+```
+***
+
+### requirements.txt
+```python
+pillow==10.0.0
+requests==2.31.0
+ttkbootstrap
+tkcalendar
+```
+
+***
+
+## Maintenance
+***
+### Maintenance Questions
+***
+
+1. Explain how you would handle issues caused by changes to the NASA API over time.
+
+- Answer: If the NASA API changes its structure, or data format, I would regularly monitor the API documentation for major updates, edit the get_apod() function in order to accomodate any changes in the API's response structure or parameters, if users are on previous versions of the API, I would implement version control in order to ensure compatibility with diffferent API versions, as well as add new error handling cases in order to manage unexpected API changes.
+
+2. Explain how you would ensure the program remains compatible with new versions of Python and libraries like requests and matplotlib.
+
+- Answer: Ensuring compatibility with versions of python and other libraries would require testing of certain versions in accordance with the program and API, updating dependencies in the requirements.txt for any large changes, as well as following release documentation for python and other libraries. This would allow me to mitigate any risk of error in my program, as well as any potential compatibitlity issues very early.
+
+3. Describe the steps you would take to fix a bug found in the program after deployment.
+
+- Answer: Using a certain process (Reproducing, Debugging, Fixing, Testing, Deploying, and Documenting), I first attempt to replicate the issue to understand the cause, use debugging tools such as VScode debugger or pdb to identify the actual causation, fix the relevant part of the code to resolve the issue, to test, try and document test cases to ensure the bug is fully mitigated, deploy the fixed code and the entire application, and finally document the fixtures made in the changelog or documentation.
+
+4. Outline how you would maintain clear documentation and ensure the program remains easy to update in the future.
+
+- Answer: In the future, clear documentation can be made sufficiently through a simply CHANGELOG, which tracks the features, updates and fixes of past versions, as well as tools such as comments and docstrings which can help understand the code and furthermore allow for easy update architecture. In my program, I could utilise comments and docstrings more efficiently in order to explain complex logic and functionality properly as well as create a seperate CHANGELOG instead of inside this markdown file to ensure clear documentation.
+***
+### Final Evaluation
+***
+
+
+1. Evaluate the current functionality of the program in terms of how well it addresses the functional and non-functional requirements.
+
+- Answer: The program successfully allows users to view NASA APOD images, including the daily APODs and APODs retrieved from a certain date fulfilling the requirement to display data from the NASA API as well as other external information. Users can also save APODs with custom names and view or remove them from a favorites list, meeting the requirement for data saving and management. For non-functional requirements, the program runs quite efficiently among my set timelimit of 10 seconds, (In the code and in the documentation), also meeting the need for user-friendliness with ttkbootstrap and DateEntry objects for modern styling and enhanced usability and accessibility. This program also derives reliable information from NASA, and is quick and easy to understand for new and old users alike.
+***
+2. Discuss areas for improvement or new features that could be added.
+
+- Answer: Through improving, I could allow for video-based and interactive APODs to be saved and viewed as URLs directly from the favorites list, enhance error messages, and use less global variables and integrate classes instead for better maintainability. New features could include adding a search feature instead of a DateEntry search in order for users to find APODs by keywords or titles and adding support for other NASA APIs such as Mars Rover photos or Earth Imagery.
+
+3. Evaluate how the project was managed throughout its development and maintenance, including your time management and how challenges were addressed during the software development lifecycle.
+
+- Answer: The project was developed with many key milestones, from the development phase to the theory phase, where I implemented frequent commits and detailed explanations of changes in the markdown file as well as github, and illustrated many challenges in there as well. Time was utilised carefully for the development phase, where I allocated slots for new features and fixes such as ttkbootstrap for styling and tkcalendar for date selection. Handling new functions and steps such as displaying an APOD in the GUI required many systematic tutorials (Listed below). However time management was faulty in my theory, as my Gantt chart illustrated the design phase to be completed before the development phase but my lingering thirst for coding overtook this idea. Overall I can improve on my theory management not only in this assessment but in classwork as well, as I strive to complete classwork and the project theory work. Many challenges throughout the code included new functions and modules, as well as the utilisation of global variables in my code which I can address better, however the time required for these challenges ultimately improved the program's functionality and usability. Overall, the project was managed effectively, while I did greatly well in the development subchapter of the lifecycle, I can improve in theory management as well as time management as a young developer.
 
 ## Additional Notes (Tutorials I used, etc.)
 1. Link: https://realpython.com/image-processing-with-the-python-pillow-library/ - I went through Pillow basics, manipulating images into bytes with ioBytesIO, as well as resizing and using filters such as LANCZOS, BILINEAR, NEAREST, and then pairing this with the original requests module for maximum capabilities.

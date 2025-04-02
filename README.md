@@ -11,14 +11,15 @@
 
 We hope you have fun in your astronomical fantasies!
 
-## Installation/Requirements
+## Requirements
 
 For the following program, you will require these modules:
 - 'requests' for getting APOD data
 - 'pillow' for image handling
 - 'ttkbootstrap' for cool GUI graphics
-- 'tkinter' for the actual GUI
+- 'tkcalendar' for a cool DateEntry feature in the GUI
 
+## Install Dependencies
 Clone the repository and navigate to the project directory:
 
 Then run the command:
