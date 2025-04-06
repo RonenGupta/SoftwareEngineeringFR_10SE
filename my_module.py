@@ -2,24 +2,16 @@ import requests # For getting data from the NASA API (Obviously)
 
 # NASA API Base URL
 APOD_URL = "https://api.nasa.gov/planetary/apod" # APOD URL
-API_KEY = "c1R5mNKBtlpRqXwI29rUPfRJvcTPbE8drebdwrEI"  # My API key - Replace with your own API key
+API_KEY = "c1R5mNKBtlpRqXwI29rUPfRJvcTPbE8drebdwrEI"  # Replace with your own API key
 
 # Dictionary to store favorite APOD
 favorites = {}
 
 def get_apod(date=None): # Function to fetch the Astronomy Picture of the Day (APOD) from NASA
-    """Fetch NASA's Astronomy Picture of the Day (APOD).
-    
-    Args:
-        date (str, optional): Date in 'YYYY-MM-DD' format to fetch APOD for a specific day.
-                              If None, fetches the current day's APOD.
-    
-    Returns:
-        dict: Dictionary containing APOD details (title, date, explanation, image_url).
-        None: If the request fails.
-    """ # Predefined docstrings for defining the function and its parameters
-    params = {"api_key": API_KEY}
-    if date:
+    """Fetch NASA's Astronomy Picture of the Day (APOD).""" 
+
+    params = {"api_key": API_KEY} # API key parameter
+    if date: # If a date is provided add it to the parameters
         params["date"] = date  # Date Parameter for fetching APOD for a specific day
 
 
@@ -49,6 +41,6 @@ def get_apod(date=None): # Function to fetch the Astronomy Picture of the Day (A
         print("Invalid response from NASA API (not JSON).")
         return None
 
-def add_favorite(name, details): # Function to save an APOD in the favorites section
+def add_favorite(name, details):
     """Store a celestial object in the favorites collection."""
     favorites[name] = details

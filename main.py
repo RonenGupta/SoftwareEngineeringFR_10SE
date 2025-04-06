@@ -16,6 +16,16 @@ apod = mm.get_apod()
 
 # Main GUI
 def GUI():
+
+    """
+    Creates the main GUI for the NASA APOD Viewer application.
+
+    Consists of four tabs: Intro, Find, View, and Save.
+    - Intro: Welcome message and APOD image.
+    - Find: Allows the user to view the daily APOD in the GUI or a as a URL and then save it.
+    - View: Allows the user to view an APOD by date and save it.
+    - Save: Allows the user to view and remove saved APODs.
+    """
     global Date1, image_label_find, find_image_frame, photo_ref, image_label_view, explanation_text_find, explanation_text_view, APOD_name_find, explanation_text_save, Saved_APODs, image_label_save, save_image_frame, photo_ref, APOD_name_view, find_label, date_label
     global NASANOTEBOOK
     
@@ -152,11 +162,12 @@ def GUI():
 
     root.mainloop() # Start the GUI
 
-# Function to view the daily APOD
+
 def View_APOD_Button():
+    """ Function to view the daily APOD in the GUI as an image inside as well as the explanation. Simply press the button and it will show the APOD of the day."""
     global image_label_find, image_url, photo_ref
     if apod is None: # Check if the APOD is available
-        print("Failed to fetch today's APOD.")
+        print("Failed to fetch today's APOD. View as a URL instead?")
         return
     try:
         image_url = apod['image_url'] # Getting the image url from the APOD
@@ -180,7 +191,7 @@ def View_APOD_Button():
         print(f"Error loading image: {e} (Maybe try opening as a URL?)")
 
 def View_APOD_URL_Button():
-    # A basic function to view the APOD as a URL and print the explanation in the console instead
+    """ A basic function to view the APOD as a URL and print the explanation in the console instead."""
     if apod:
         print(f"\nTitle: {apod['title']}")
         print(f"Date: {apod['date']}")
@@ -192,6 +203,7 @@ def View_APOD_URL_Button():
         print(f"Could not open browser: {e}")
 
 def Save_APOD_Button():
+    """ A function to save the Daily APOD to the favorites list/listbox by a name given by the user."""
     global photo_ref, Saved_APODs, APOD_name_find, explanation_text_find
     find_name = APOD_name_find.get()
     if not find_name: # Check if the name given is empty
@@ -208,6 +220,7 @@ def Save_APOD_Button():
 
 # Function to view APOD for the specified date
 def View_APOD_Input():
+    """ A function to view the APOD from a specified date in the GUI as an image as well as the explanation."""
     global photo_ref, image_label_view, explanation_text_view, Date1
     date = Date1.entry.get() # Get the date from the DateEntry widget
     if date: 
@@ -244,6 +257,7 @@ def View_APOD_Input():
     
 # Function to save the APOD
 def Save_APOD(): 
+    """ A function to save the APOD from the View Frame to the favorites list/listbox by a name given by the user."""
     global photo_ref, APOD_name_view
     try:
         name = APOD_name_view.get() # Get the name from the Entry widget
@@ -270,6 +284,7 @@ def Save_APOD():
 
 # Function to remove the APOD
 def Remove_Saved_APOD():
+    """ A function to remove the APOD from the favorites list/listbox by curselection from the user."""
     global Saved_APODs
     try:
         selected_index = Saved_APODs.curselection() # Get the selected index from the listbox, using the curselection function
@@ -287,6 +302,7 @@ def Remove_Saved_APOD():
         print(f"Error removing APOD: {e}")
 
 def View_Saved_APOD():
+    """ A function to view the selected APOD from the favorites list/listbox by curselection from the user."""
     global Saved_APODs, photo_ref, image_label_save, explanation_text_save
     selected_index = Saved_APODs.curselection() #Get the selected index from the listbox, using the curselection function
     if selected_index: # Check if the user selected an APOD
