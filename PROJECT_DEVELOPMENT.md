@@ -92,7 +92,7 @@
 
 Actor: User (Astronomer / Space Nerd)
 
-Preconditions: Internet acess, NASA API's, Python Functions (Matplotlib, Tkinter, Pandas, Requests, Pillow,  etc.)
+Preconditions: Internet acess, NASA API's, Python Modules (Matplotlib, Tkinter, Pandas, Requests, Pillow,  etc.)
 
 Main Flow:
 
