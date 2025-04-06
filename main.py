@@ -204,8 +204,12 @@ def View_APOD_URL_Button():
 
 def Save_APOD_Button():
     """ A function to save the Daily APOD to the favorites list/listbox by a name given by the user."""
-    global photo_ref, Saved_APODs, APOD_name_find, explanation_text_find
+    global photo_ref, Saved_APODs, APOD_name_find, explanation_text_find, saved_names
     find_name = APOD_name_find.get()
+    saved_names = Saved_APODs.get(0, END) # Check if the name already exists
+    if find_name in saved_names:
+            print(f"APOD with name '{find_name}' already exists in favorites. Please choose a different name.")
+            return
     if not find_name: # Check if the name given is empty
         print("Please enter a name for the Daily APOD.")
         return
