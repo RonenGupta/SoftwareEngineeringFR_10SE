@@ -1040,7 +1040,7 @@ def View_APOD_Input():
 GUI()
 
 ```
-- Explanation: A very long and lethargic commit, I did much research on how to fetch an APOD on a specific date, inside the GUI. This worked through the fact that I used numerous new modules (io, pillow, requests) to process the APOD image. I did this through getting the input of the date from the user as a parameter (which I added in the module), along with the get_apod function, and then initialising it with the requests module to retrieve the url with an HTTP request as well as checking if it was successful or not with the function response.raise_for_status(), then from the Pillow library to open the image for the binary data and following using a conversion technique utilised in Tkinter to make the processed image into a PhotoImage, a very long process but worthwhile due to the tolerance of good image quality, and then outputting it with the line image_label_view_config(image=photo), updating the wdiget in the GUI to display the new image. I also stored this image in a photo_ref variable for further use in the future such as saving it, which was one of my development plans. I did the same for the daily APOD without getting the date parameter from the user, and included some error handling as well.
+- Explanation: A very long and lethargic commit, I did much research on how to fetch an APOD on a specific date, inside the GUI. This worked through the fact that I used numerous new modules (io, pillow, requests) to process the APOD image. I did this through getting the input of the date from the user as a parameter (which I added in the module), along with the get_apod function, and then initialising it with the requests module to retrieve the url with an HTTP request as well as checking if it was successful or not with the function response.raise_for_status(), then from the Pillow library to open the image for the binary data and following using a conversion technique utilised in Tkinter to make the processed image into a PhotoImage, a very long process but worthwhile due to the tolerance of good image quality, and then outputting it with the line image_label_view_config(image=photo), updating the widget in the GUI to display the new image. I also stored this image in a photo_ref variable for further use in the future such as saving it, which was one of my development plans. I did the same for the daily APOD without getting the date parameter from the user, and included some error handling as well.
 
 ### 6. Sixth Commit - Explanation Labels (Errors Present)
 
@@ -1852,7 +1852,7 @@ tkcalendar
 
 4. Outline how you would maintain clear documentation and ensure the program remains easy to update in the future.
 
-- Answer: In the future, clear documentation can be made sufficiently through a simply CHANGELOG, which tracks the features, updates and fixes of past versions, as well as tools such as comments and docstrings which can help understand the code and furthermore allow for easy update architecture. In my program, I could utilise comments and docstrings more efficiently in order to explain complex logic and functionality properly as well as create a seperate CHANGELOG instead of inside this markdown file to ensure clear documentation.
+- Answer: In the future, clear documentation can be made sufficiently through a simply CHANGELOG or through the same README, which tracks the features, updates and fixes of past versions, as well as tools such as comments and docstrings which can help understand the code and furthermore allow for easy update architecture. In my program, I could utilise comments and docstrings more efficiently in order to explain complex logic and functionality properly as well as create a seperate CHANGELOG instead of inside this markdown file to ensure clear documentation.
 ***
 ### Final Evaluation
 ***
@@ -1861,7 +1861,7 @@ tkcalendar
 1. Evaluate the current functionality of the program in terms of how well it addresses the functional and non-functional requirements.
 
 - Answer: The program successfully allows users to view NASA APOD images, including the daily APODs and APODs retrieved from a certain date fulfilling the requirement to display data from the NASA API as well as other external information. Users can also save APODs with custom names and view or remove them from a favorites list, meeting the requirement for data saving and management. For non-functional requirements, the program runs quite efficiently among my set timelimit of 10 seconds, (In the code and in the documentation), also meeting the need for user-friendliness with ttkbootstrap and DateEntry objects for modern styling and enhanced usability and accessibility. This program also derives reliable information from NASA, and is quick and easy to understand for new and old users alike.
-***
+
 2. Discuss areas for improvement or new features that could be added.
 
 - Answer: Through improving, I could allow for video-based and interactive APODs to be saved and viewed as URLs directly from the favorites list, enhance error messages, and use less global variables and integrate classes instead for better maintainability. New features could include adding a search feature instead of a DateEntry search in order for users to find APODs by keywords or titles and adding support for other NASA APIs such as Mars Rover photos or Earth Imagery.
