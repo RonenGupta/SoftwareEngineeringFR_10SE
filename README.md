@@ -9,6 +9,8 @@
 3. View an APOD by date
 4. Save an APOD
 
+- Note: To save an APOD you MUST view the APOD with the button and then give it a name and save it. You cannot go to another frame and view an APOD with the button and then save it otherwise the photo reference will not be correct. Be aware that the LAST APOD you open is the one that you are saving.
+
 We hope you have fun in your astronomical fantasies!
 
 ## Requirements
