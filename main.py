@@ -153,7 +153,7 @@ def GUI():
     Remove_Button = tk.Button(SaveFrame,text="Remove Selected APOD!",command=lambda: mm.Remove_Saved_APOD(Saved_APODs, explanation_text_save, image_label_save),fg="white",bg="black")
     Remove_Button.pack(pady=10)
 
-    # Photo_ref is a variable which stores the image reference
+    # Photo_ref is a list object which stores the image reference
     photo_ref = [None]
 
     root.mainloop()  # Start the GUI
