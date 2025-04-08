@@ -254,11 +254,7 @@ END Remove_Saved_APOD
 ***
 
 ### Data Dictionary
-- Link for the Data Dictionary: https://docs.google.com/document/d/1pd_3o4khOgFJZ_VoCDkAaHMMozaAgS-jTSy6FWuxrEM/edit?usp=sharing
-![Data Dictionary 1](./DataDictionary1.png)
-![Data Dictionary 2](./DataDictionary2.png)
-![Data Dictionary 3](./DataDictionary3.png)
-![Data Dictionary 4](./DataDictionary4.png)
+- Link for the Data Dictionary: https://docs.google.com/document/d/1pd_3o4khOgFJZ_VoCDkAaHMMozaAgS-jTSy6FWuxrEM/edit?pli=1&tab=t.0
 ***
 
 ## Development
