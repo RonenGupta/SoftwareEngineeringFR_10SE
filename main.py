@@ -10,7 +10,7 @@ import io  # IO for handling image data and converting it into bytes
 from PIL import Image, ImageTk  # Pillow for further image handling
 import webbrowser  # Webbrowser for opening the APOD in a browser
 
-# Fetch today's APOD
+# Fetch today's APOD beforehand to check if it is available, and also fetch the APOD data for the daily date
 apod = mm.get_apod()
 
 # Main GUI
